@@ -23,6 +23,7 @@
             android:src="@drawable/apocalipe" />
 
         <TextView
+            android:id="@+id/idTituloFilmes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
