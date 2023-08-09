@@ -13,41 +13,45 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.etecia.myapp.databinding.SplashLayoutBinding;
 
 public class Splash_Activity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private SplashLayoutBinding binding;
+    List<Filmes> filmesList;
+
+    RecyclerView idRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash_layout);
 
-        binding = SplashLayoutBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        idRecyclerView = findViewById(R.id.idListadeFilmes);
 
-        setSupportActionBar(binding.toolbar);
+        filmesList = new ArrayList<>();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_splash);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        filmesList.add(
+                new Filmes("desejos","Romance","Daora",R.drawable.desejos));
+        new Filmes("dois mil e sessenta e sete","Ação","Daora",R.drawable.doismilesessetnaesete);
+        new Filmes("medo profundo","Terror","Daora",R.drawable.medo);
+        new Filmes("menina que matou os pais","Drama","Daora",R.drawable.menina);
+        new Filmes("Ponta bala","Ação","Daora",R.drawable.pontabala);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_splash);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-}
+
+        MyAdapter adapter = new MyAdapter(getApplicationContext(), filmesList);
+
+        idRecyclerView.setLayoutManager(new
+                GridLayoutManager(getApplicationContext(), 2));
+
+        idRecyclerView.setHasFixedSize(true);
+
+        idRecyclerView.setAdapter(adapter);
+
+    }}
